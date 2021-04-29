@@ -11,7 +11,7 @@ class App {
     this.app = express();
     this.middlewares();
     this.routes();
-    this.errors();
+    this.errorHandler();
   }
 
   middlewares() {
@@ -22,8 +22,8 @@ class App {
     this.app.use('/users', userRouter);
   }
 
-  errors() {
-    this.app.use((error, request, response, _next) => {
+  errorHandler() {
+    this.app.use(async (error, request, response, next) => {
       if (error instanceof ValidationError) {
         return response
           .status(400)
@@ -31,8 +31,7 @@ class App {
       }
       if (error instanceof AppError) {
         return response.status(error.statusCode).json({
-          status: 'Client Error.',
-          message: error.message.message,
+          message: error.message,
         });
       }
       console.error(error);

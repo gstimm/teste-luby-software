@@ -15,4 +15,4 @@ class Token extends Model {
   }
 }
 
-export default Token;
+module.exports = Token;

@@ -1,4 +1,5 @@
 import { verify } from 'jsonwebtoken';
+import { promisify } from 'util';
 import authConfig from '../../config/auth';
 import AppError from '../errors/AppError';
 
@@ -12,9 +13,11 @@ export default async (request, response, next) => {
   const [, token] = authHeader.split(' ');
 
   try {
-    const decoded = verify(token, authConfig.jwt.secret);
+    const decoded = await promisify(verify)(token, authConfig.jwt.secret);
 
-    request.user = { id: decoded.sub };
+    const { sub } = decoded;
+
+    request.user = { id: sub };
 
     return next();
   } catch (err) {

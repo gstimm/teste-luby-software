@@ -1,6 +1,8 @@
 import AuthenticateUserService from '../services/AuthenticateUserService';
 import CreateUserService from '../services/CreateUserService';
+import DeleteUserService from '../services/DeleteUserService';
 import IndexUserService from '../services/IndexUserService';
+import ShowUserService from '../services/ShowUserService';
 import UpdateUserService from '../services/UpdateUserService';
 import AppError from '../errors/AppError';
 import UserView from '../views/UserView';
@@ -23,7 +25,7 @@ class UserController {
 
       return response.status(201).json(UserView.render(user));
     } catch (err) {
-      throw new AppError(err);
+      throw new AppError(err, err.statusCode);
     }
   }
 
@@ -39,15 +41,31 @@ class UserController {
 
       return response.status(200).json({ user: UserView.render(user), token });
     } catch (err) {
-      throw new AppError(err);
+      throw new AppError(err, err.statusCode);
     }
   }
 
   async index(request, response) {
-    const indexUserService = new IndexUserService();
-    const users = await indexUserService.execute();
+    try {
+      const indexUserService = new IndexUserService();
+      const users = await indexUserService.execute();
 
-    return response.status(200).json({ users: UserView.renderMany(users) });
+      return response.status(200).json({ users: UserView.renderMany(users) });
+    } catch (err) {
+      throw new AppError(err, err.statusCode);
+    }
+  }
+
+  async show(request, response) {
+    try {
+      const { username } = request.params;
+      const showUserService = new ShowUserService();
+      const user = await showUserService.execute({ username });
+
+      return response.status(200).json(UserView.render(user));
+    } catch (err) {
+      throw new AppError(err, err.statusCode);
+    }
   }
 
   async update(request, response) {
@@ -67,9 +85,23 @@ class UserController {
         bio,
       });
 
-      return response.status(200).json(user);
+      return response.status(200).json(UserView.render(user));
     } catch (err) {
-      throw new AppError(err);
+      throw new AppError(err, err.statusCode);
+    }
+  }
+
+  async delete(request, response) {
+    try {
+      const user_id = request.user.id;
+
+      const deleteUserService = new DeleteUserService();
+
+      await deleteUserService.execute({ user_id });
+
+      return response.status(204).send();
+    } catch (err) {
+      throw new AppError(err, err.statusCode);
     }
   }
 }

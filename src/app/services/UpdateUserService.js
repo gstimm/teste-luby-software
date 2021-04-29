@@ -27,7 +27,7 @@ class UpdateUserService {
     const user = await User.findByPk(user_id);
 
     if (!user) {
-      throw new AppError('User not found.');
+      throw new AppError('User not found.', 404);
     }
 
     data.email = data.email.toLocaleLowerCase();
@@ -52,6 +52,8 @@ class UpdateUserService {
       if (usernameIsAlreadyInUse) {
         throw new AppError('Username is already in use.');
       }
+
+      user.username = data.username;
     }
 
     if (name) {

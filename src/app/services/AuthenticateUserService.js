@@ -1,16 +1,21 @@
+import * as yup from 'yup';
 import { sign } from 'jsonwebtoken';
+import User from '../models/User';
+// import Token from '../models/Token';
 import authConfig from '../../config/auth';
 import AppError from '../errors/AppError';
-import User from '../models/User';
-import Token from '../models/Token';
 
 class AuthenticateUserService {
   async execute({ username }) {
-    if (!username) {
-      throw new AppError('Username is missing.');
-    }
+    const schema = yup.object().shape({
+      username: yup.string().required('Username is required.'),
+    });
 
-    const user = await User.findOne({ where: { username } });
+    const data = await schema.validate({ username });
+
+    const user = await User.findOne({
+      where: { username: data.username },
+    });
 
     if (!user) {
       throw new AppError('User not found.', 404);
@@ -21,9 +26,7 @@ class AuthenticateUserService {
       expiresIn: authConfig.jwt.expiresIn,
     });
 
-    await Token.create({
-      user_id: user.id,
-    });
+    // await Token.create({ user_id: user.id });
 
     return { user, token };
   }

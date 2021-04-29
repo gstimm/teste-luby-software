@@ -1,21 +1,25 @@
-import Sequelize, { Model } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 
 class User extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: Sequelize.STRING,
-        username: Sequelize.STRING,
-        email: Sequelize.STRING,
-        location: Sequelize.STRING,
-        avatar: Sequelize.STRING,
-        bio: Sequelize.STRING,
+        name: DataTypes.STRING,
+        username: DataTypes.STRING,
+        email: DataTypes.STRING,
+        location: DataTypes.STRING,
+        avatar: DataTypes.STRING,
+        bio: DataTypes.STRING,
       },
       {
         sequelize,
       },
     );
   }
+
+  static associate(models) {
+    this.hasMany(models.Token, { foreignKey: 'user_id', as: 'tokens' });
+  }
 }
 
-export default User;
+module.exports = User;
