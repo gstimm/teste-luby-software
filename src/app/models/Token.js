@@ -1,0 +1,18 @@
+import { Model } from 'sequelize';
+
+class Token extends Model {
+  static init(sequelize) {
+    super.init(
+      {},
+      {
+        sequelize,
+      },
+    );
+  }
+
+  static associate(models) {
+    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+  }
+}
+
+export default Token;
