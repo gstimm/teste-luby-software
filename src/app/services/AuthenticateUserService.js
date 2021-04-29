@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { sign } from 'jsonwebtoken';
 import User from '../models/User';
-// import Token from '../models/Token';
+import Token from '../models/Token';
 import authConfig from '../../config/auth';
 import AppError from '../errors/AppError';
 
@@ -26,7 +26,9 @@ class AuthenticateUserService {
       expiresIn: authConfig.jwt.expiresIn,
     });
 
-    // await Token.create({ user_id: user.id });
+    await Token.create({
+      user_id: user.id,
+    });
 
     return { user, token };
   }

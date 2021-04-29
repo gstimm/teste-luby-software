@@ -1,21 +1,16 @@
 import Sequelize from 'sequelize';
 
-import User from '../app/models/User';
-
 import databaseConfig from '../config/database';
 
-const models = [User];
+import User from '../app/models/User';
+import Token from '../app/models/Token';
 
-class Database {
-  constructor() {
-    this.init();
-  }
+const connection = new Sequelize(databaseConfig);
 
-  init() {
-    this.connection = new Sequelize(databaseConfig);
+User.init(connection);
+Token.init(connection);
 
-    models.map(model => model.init(this.connection));
-  }
-}
+User.associate(connection.models);
+Token.associate(connection.models);
 
-export default new Database();
+module.exports = connection;
