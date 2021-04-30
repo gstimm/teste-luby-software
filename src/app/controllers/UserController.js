@@ -49,9 +49,10 @@ class UserController {
   async index(request, response) {
     try {
       const indexUserService = new IndexUserService();
+
       const users = await indexUserService.execute();
 
-      return response.status(200).json({ users: UserView.renderMany(users) });
+      return response.status(200).json(UserView.renderMany(users));
     } catch (err) {
       throw new AppError(err, err.statusCode);
     }
@@ -59,11 +60,13 @@ class UserController {
 
   async show(request, response) {
     try {
-      const { username } = request.params;
-      const showUserService = new ShowUserService();
-      const user = await showUserService.execute({ username });
+      const { id } = request.params;
 
-      return response.status(200).json(UserView.render(user));
+      const showUserService = new ShowUserService();
+
+      const user = await showUserService.execute({ id });
+
+      return response.status(200).json(UserView.renderDetail(user));
     } catch (err) {
       throw new AppError(err, err.statusCode);
     }

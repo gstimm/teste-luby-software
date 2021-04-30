@@ -3,6 +3,7 @@ import 'express-async-errors';
 import { ValidationError } from 'yup';
 import AppError from './app/errors/AppError';
 import userRouter from './routes/user.routes';
+import repositoryRouter from './routes/repository.routes';
 
 import './database';
 
@@ -20,6 +21,7 @@ class App {
 
   routes() {
     this.app.use('/users', userRouter);
+    this.app.use('/repositories', repositoryRouter);
   }
 
   errorHandler() {
@@ -34,7 +36,6 @@ class App {
           message: error.message,
         });
       }
-      console.error(error);
       return response.status(500).json({ message: 'Internal Server Error.' });
     });
   }

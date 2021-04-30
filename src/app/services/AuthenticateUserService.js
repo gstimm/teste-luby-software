@@ -11,10 +11,10 @@ class AuthenticateUserService {
       username: yup.string().required('Username is required.'),
     });
 
-    const data = await schema.validate({ username });
+    await schema.validate({ username });
 
     const user = await User.findOne({
-      where: { username: data.username },
+      where: { username },
     });
 
     if (!user) {

@@ -7,7 +7,7 @@ import EnsureAuthenticated from '../app/middlewares/EnsureAuthenticated';
 const router = new Router();
 
 router.get('/index', UserController.index);
-router.get('/show/:username', UserController.show);
+router.get('/show/:id', UserController.show);
 
 router.post('/store', UserController.store);
 router.post('/login', UserController.login);
