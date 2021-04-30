@@ -1,6 +1,7 @@
 import AuthenticateUserService from '../services/AuthenticateUserService';
 import CreateUserService from '../services/CreateUserService';
 import DeleteUserService from '../services/DeleteUserService';
+import HandleFollowService from '../services/HandleFollowService';
 import IndexUserService from '../services/IndexUserService';
 import ShowUserService from '../services/ShowUserService';
 import UpdateUserService from '../services/UpdateUserService';
@@ -103,6 +104,20 @@ class UserController {
     } catch (err) {
       throw new AppError(err, err.statusCode);
     }
+  }
+
+  async follow(request, response) {
+    const follower_id = request.user.id;
+    const { followed_id } = request.params;
+
+    const handleFollowService = new HandleFollowService();
+
+    const follow = await handleFollowService.execute({
+      followed_id,
+      follower_id,
+    });
+
+    return response.status(200).json(follow);
   }
 }
 

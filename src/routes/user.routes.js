@@ -14,6 +14,12 @@ router.post('/login', UserController.login);
 
 router.put('/update', EnsureAuthenticated, UserController.update);
 
+router.patch(
+  '/follow/:followed_id',
+  EnsureAuthenticated,
+  UserController.follow,
+);
+
 router.delete('/delete', EnsureAuthenticated, UserController.delete);
 
 export default router;
