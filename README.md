@@ -17,12 +17,12 @@ o retorno será a ID do container caso o comando tenha sucesso;
 5. Em seguida, será necessário iniciar o container com o comando: `docker start ID_do_container`;
 6. Com o container criado, o proximo passo é criar o banco de dados. Isso pode ser feito através de um software de sua escolha, recomendo o [Postbird](https://www.electronjs.org/apps/postbird), ou com o camando `yarn sequelize db:create`. Guarde os dados usados, pois eles serão utilizados no `.env`.
 7. Clone o repositório e altere o nome do arquivo `.env.example` para `.env` na raiz do projeto;
-8. No arquivo `.env`, complete os dados necessários conforme os dados usados na criação do banco.
+8. No arquivo `.env`, complete os dados necessários conforme os dados usados na criação do banco. Em JWT_SECRET, recomendo o uso de uma chave [MD5](https://www.md5online.org/md5-encrypt.html).
 9. Na pasta do projeto, instale as dependências utilizando o comando `yarn`;
 10. Vamos rodar as migrações para deixar o banco de dados no formato correto, digite no console:
  `yarn sequelize db:migrate` e todas as migrações devem ser executadas moldando o formato do banco de dados.
-11. Inicie a API digitando no console: `yarn dev`;
-12. Utilize o [Insomnia](https://insomnia.rest/download) para testar a aplicação,  usando o template abaixo.
+11. Inicie a API com o comando: `yarn dev`;
+12. Utilize o [Insomnia](https://insomnia.rest/download) para testar a aplicação, usando o template abaixo.
 
 ## Template do Insomnia para testar:
 
