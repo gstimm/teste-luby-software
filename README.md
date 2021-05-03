@@ -15,14 +15,14 @@ Para executá-los, abra o `index.html` no navegador e basta escolher a função 
 `docker run --name user_name -e POSTGRES_PASSWORD=your_password -p 5432:5432 -d postgres`
 o retorno será a ID do container caso o comando tenha sucesso;
 5. Em seguida, será necessário iniciar o container com o comando: `docker start ID_do_container`;
-6. Com o container criado, o proximo passo é criar o banco de dados. Isso pode ser feito através de um software de sua escolha, recomendo o [Postbird](https://www.electronjs.org/apps/postbird), ou com o camando `yarn sequelize db:create`. Guarde os dados usados para criar o banco, pois eles serão utilizados no `.env`.
+6. Com o container criado, o proximo passo é criar o banco de dados. Isso pode ser feito através de um software de sua escolha, recomendo o [Postbird](https://www.electronjs.org/apps/postbird), ou com o camando `yarn sequelize db:create`. Guarde os dados usados, pois eles serão utilizados no `.env`.
 7. Clone o repositório e altere o nome do arquivo `.env.example` para `.env` na raiz do projeto;
 8. No arquivo `.env`, complete os dados necessários conforme os dados usados na criação do banco.
 9. Na pasta do projeto, instale as dependências utilizando o comando `yarn`;
 10. Vamos rodar as migrações para deixar o banco de dados no formato correto, digite no console:
  `yarn sequelize db:migrate` e todas as migrações devem ser executadas moldando o formato do banco de dados.
 11. Inicie a API digitando no console: `yarn dev`;
-12. Utilize o [Insomnia](https://insomnia.rest/download) para testar a aplicação.
+12. Utilize o [Insomnia](https://insomnia.rest/download) para testar a aplicação,  usando o template abaixo.
 
 ## Template do Insomnia para testar:
 
